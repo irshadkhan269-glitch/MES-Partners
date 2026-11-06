@@ -1,0 +1,109 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style></head><body><title>Taherul's Referral Card</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single referral card — greeting band, earnings tiles, milestone meter, referral list; one column on phone */
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --sunk:#e9eeec; --ink:#14211d; --muted:#5b6b66; --line:#d6dedb;
+  --accent:#c8780a; --band:#0f5f56; --band-ink:#f2faf8; --good:#1d7a4a; --good-bg:#e1f2e8; --warn:#9a5b00; --warn-bg:#fbefd9;
+  --f-display:"Familjen Grotesk",ui-sans-serif,system-ui,sans-serif; --f-body:"Public Sans",ui-sans-serif,system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1514;--surface:#161e1c;--sunk:#1d2725;--ink:#e6eeeb;--muted:#9aaca6;--line:#2a3633;--accent:#e9a23b;--band:#123e39;--band-ink:#e6f5f2;--good:#6fd39b;--good-bg:#173226;--warn:#f0b864;--warn-bg:#33270f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1514;--surface:#161e1c;--sunk:#1d2725;--ink:#e6eeeb;--muted:#9aaca6;--line:#2a3633;--accent:#e9a23b;--band:#123e39;--band-ink:#e6f5f2;--good:#6fd39b;--good-bg:#173226;--warn:#f0b864;--warn-bg:#33270f;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.band{background:var(--band);color:var(--band-ink)}
+.in{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band .in{padding-block:28px 26px;display:grid;gap:6px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+h1{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.15;margin:0;text-wrap:balance}
+.sub{opacity:.85;font-size:14px}
+.code{font-family:var(--f-mono);font-size:12.5px}
+main.in{padding-block:22px 48px;display:grid;gap:18px}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.tile .l{font-size:12px;color:var(--muted)}
+.tile .v{font-family:var(--f-display);font-weight:700;font-size:28px;font-variant-numeric:tabular-nums}
+.tile.money{border-color:var(--accent)}
+.tile.money .v{color:var(--accent)}
+.meter{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px}
+.meter h2,.list h2{font-family:var(--f-display);font-weight:600;font-size:17px;margin:0}
+.steps{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px}
+.steps i{height:10px;border-radius:5px;background:var(--sunk)}
+.steps i.on{background:var(--accent)}
+.muted{color:var(--muted);font-size:13.5px}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.list .hd{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.ri{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.ri:last-child{border-bottom:none}
+.ri .nm{font-weight:600}
+.ri .meta{font-size:12.5px;color:var(--muted)}
+.pill{font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px;white-space:nowrap;align-self:start}
+.pill.on{background:var(--good-bg);color:var(--good)} .pill.wait{background:var(--warn-bg);color:var(--warn)}
+.empty{padding:24px 16px;color:var(--muted);text-align:center}
+.terms{font-size:13px;color:var(--muted);display:grid;gap:4px}
+footer{font-size:12.5px;color:var(--muted)}
+@media (max-width:560px){.tiles{grid-template-columns:1fr 1fr}.tile.money{grid-column:span 2}h1{font-size:26px}}
+</style>
+
+<div class="band"><div class="in">
+  <div class="eyebrow">My Equity School · Referral Partner</div>
+  <h1 id="hello">Your referrals</h1>
+  <div class="sub">Partner since <span id="joined"></span> · <span class="code" id="pcode"></span></div>
+</div></div>
+
+<main class="in">
+  <section class="tiles" aria-label="Your numbers">
+    <div class="tile"><div class="l">Friends referred</div><div class="v" id="t-ref">0</div><div class="muted">accounts opened since you joined</div></div>
+    <div class="tile"><div class="l">Started trading</div><div class="v" id="t-trd">0</div><div class="muted" id="t-trd-s">of your referrals</div></div>
+    <div class="tile money"><div class="l">Partner bonus earned</div><div class="v" id="t-bonus">₹0</div><div class="muted">from My Equity School</div></div>
+  </section>
+
+  <section class="meter" aria-labelledby="mh">
+    <h2 id="mh">Next milestone</h2>
+    <div class="steps" id="steps"></div>
+    <div class="muted" id="mtext"></div>
+  </section>
+
+  <section class="list" aria-labelledby="lh">
+    <div class="hd"><h2 id="lh">People you referred</h2><span class="muted" id="lcount"></span></div>
+    <div id="rows"></div>
+  </section>
+
+  <section class="terms" aria-label="How the bonus works">
+    <b style="color:var(--ink)">How your bonus works</b>
+    <span id="terms"></span>
+    <span>Angel One's own Refer &amp; Earn reward is separate and is paid by Angel One into your account.</span>
+  </section>
+
+  <footer>Updated <span id="upd"></span>. Numbers refresh once a day. Questions? Call your My Equity School relationship manager.</footer>
+</main>
+
+<script type="application/json" id="data">{"first_name": "Taherul", "code_masked": "T20••94", "joined": "2026-11-06", "updated": "2026-11-06T09:22:44.449Z", "settings": {"per_referral": 200, "counts_when": "traded", "milestone_every": 5, "milestone_bonus": 1000, "milestone_repeat": "once"}, "qualified": 0, "bonus": 0.0, "referrals": []}</script>
+<script>
+(function(){
+const D=JSON.parse(document.getElementById('data').textContent);
+const $=id=>document.getElementById(id);
+const inr=n=>'₹'+Math.round(n||0).toLocaleString('en-IN');
+const fmtD=s=>{if(!s)return'';const d=new Date(s+'T00:00:00');return isNaN(d)?s:d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})};
+const S=D.settings,refs=D.referrals||[];
+$('hello').textContent='Namaste, '+(D.first_name||'Partner');
+$('joined').textContent=fmtD(D.joined);$('pcode').textContent=D.code_masked||'';
+const traded=refs.filter(r=>r.traded).length;
+$('t-ref').textContent=refs.length;$('t-trd').textContent=traded;$('t-trd-s').textContent=refs.length?Math.round(traded/refs.length*100)+'% of your referrals':'of your referrals';
+$('t-bonus').textContent=inr(D.bonus);
+const every=Math.max(1,+S.milestone_every||5),q=D.qualified||0;
+const done=S.milestone_repeat==='every'?q%every:Math.min(q,every);
+$('steps').innerHTML=Array.from({length:every},(_,i)=>`<i class="${i<done?'on':''}"></i>`).join('');
+if(S.milestone_repeat!=='every'&&q>=every)$('mtext').textContent=`Milestone reached: ${inr(S.milestone_bonus)} bonus earned. You still earn ${inr(S.per_referral)} for every new referral.`;
+else $('mtext').textContent=`${every-done} more ${S.counts_when==='traded'?'referrals who start trading':'referrals'} to earn your ${inr(S.milestone_bonus)} bonus.`;
+$('lcount').textContent=refs.length?refs.length+' since you joined':'';
+const counts=r=>S.counts_when==='traded'?r.traded:true;
+$('rows').innerHTML=refs.length?refs.map(r=>`<div class="ri"><div><div class="nm"></div><div class="meta">Referred ${fmtD(r.date)} · <span class="code"></span></div></div><span class="pill ${r.traded?'on':'wait'}">${r.traded?'Trading':'Account opened'}</span>${counts(r)?`<div class="meta" style="grid-column:1/-1">Counts for your bonus: ${inr(S.per_referral)}</div>`:'<div class="meta" style="grid-column:1/-1">Counts for your bonus after the first trade</div>'}</div>`).join(''):'<div class="empty">No referrals since you joined yet. Share your Angel One referral link and they will show up here the day after the account opens.</div>';
+[...$('rows').querySelectorAll('.ri')].forEach((el,i)=>{el.querySelector('.nm').textContent=refs[i].first_name||'Friend';el.querySelector('.code').textContent=refs[i].code_masked||''});
+$('terms').textContent=`You earn ${inr(S.per_referral)} for every friend ${S.counts_when==='traded'?'who opens an account through your link and makes a first trade':'whose account opens through your link'}, plus ${inr(S.milestone_bonus)} ${S.milestone_repeat==='every'?'for every '+every+' such referrals':'when you reach '+every}. Only referrals made after you joined the programme count.`;
+$('upd').textContent=D.updated?new Date(D.updated).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'';
+})();
+</script>
+</body></html>
