@@ -44,6 +44,13 @@ main.in{padding-block:22px 48px;display:grid;gap:18px}
 .empty{padding:24px 16px;color:var(--muted);text-align:center}
 .terms{font-size:13px;color:var(--muted);display:grid;gap:4px}
 footer{font-size:12.5px;color:var(--muted)}
+.share{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:16px;display:grid;gap:10px}
+.share h2{font-family:var(--f-display);font-weight:600;font-size:17px;margin:0}
+.share .lk{font-family:var(--f-mono);font-size:13px;background:var(--sunk);border-radius:8px;padding:10px 12px;word-break:break-all}
+.share .acts{display:flex;gap:8px;flex-wrap:wrap}
+.share .b{font:inherit;font-weight:600;font-size:14px;border-radius:8px;padding:10px 16px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.share .b.wa{background:#1f8f4e;border-color:#1f8f4e;color:#fff}
+.share .b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (max-width:560px){.tiles{grid-template-columns:1fr 1fr}.tile.money{grid-column:span 2}h1{font-size:26px}}
 </style>
 
@@ -58,6 +65,13 @@ footer{font-size:12.5px;color:var(--muted)}
     <div class="tile"><div class="l">Friends referred</div><div class="v" id="t-ref">0</div><div class="muted">accounts opened since you joined</div></div>
     <div class="tile"><div class="l">Started trading</div><div class="v" id="t-trd">0</div><div class="muted" id="t-trd-s">of your referrals</div></div>
     <div class="tile money"><div class="l">Partner bonus earned</div><div class="v" id="t-bonus">₹0</div><div class="muted">from My Equity School</div></div>
+  </section>
+
+  <section class="share" id="share" aria-labelledby="sh" hidden>
+    <h2 id="sh">Your Angel One referral link</h2>
+    <div class="lk" id="lk"></div>
+    <div class="acts"><button class="b" id="cp" type="button">Copy link</button><a class="b wa" id="wa" target="_blank" rel="noopener">Share on WhatsApp</a></div>
+    <div class="muted">Friends must open their Angel One account through this link for it to count.</div>
   </section>
 
   <section class="meter" aria-labelledby="mh">
@@ -80,7 +94,7 @@ footer{font-size:12.5px;color:var(--muted)}
   <footer>Updated <span id="upd"></span>. Numbers refresh once a day. Questions? Call your My Equity School relationship manager.</footer>
 </main>
 
-<script type="application/json" id="data">{"first_name": "Chandan", "code_masked": "AAA•••••68", "joined": "2026-11-06", "updated": "2026-11-10T14:13:00.800Z", "settings": {"per_referral": 200, "counts_when": "traded", "milestone_every": 5, "milestone_bonus": 1000, "milestone_repeat": "once"}, "qualified": 0, "bonus": 0.0, "referrals": []}</script>
+<script type="application/json" id="data">{"first_name": "Chandan", "code_masked": "AAA•••••68", "joined": "2026-11-06", "updated": "2026-11-09T08:45:24.381Z", "settings": {"per_referral": 200, "counts_when": "traded", "milestone_every": 5, "milestone_bonus": 1000, "milestone_repeat": "once"}, "qualified": 0, "bonus": 0.0, "referral_link": "", "referrals": []}</script>
 <script>
 (function(){
 const D=JSON.parse(document.getElementById('data').textContent);
@@ -103,6 +117,10 @@ const counts=r=>S.counts_when==='traded'?r.traded:true;
 $('rows').innerHTML=refs.length?refs.map(r=>`<div class="ri"><div><div class="nm"></div><div class="meta">Referred ${fmtD(r.date)} · <span class="code"></span></div></div><span class="pill ${r.traded?'on':'wait'}">${r.traded?'Trading':'Account opened'}</span>${counts(r)?`<div class="meta" style="grid-column:1/-1">Counts for your bonus: ${inr(S.per_referral)}</div>`:'<div class="meta" style="grid-column:1/-1">Counts for your bonus after the first trade</div>'}</div>`).join(''):'<div class="empty">No referrals since you joined yet. Share your Angel One referral link and they will show up here the day after the account opens.</div>';
 [...$('rows').querySelectorAll('.ri')].forEach((el,i)=>{el.querySelector('.nm').textContent=refs[i].first_name||'Friend';el.querySelector('.code').textContent=refs[i].code_masked||''});
 $('terms').textContent=`You earn ${inr(S.per_referral)} for every friend ${S.counts_when==='traded'?'who opens an account through your link and makes a first trade':'whose account opens through your link'}, plus ${inr(S.milestone_bonus)} ${S.milestone_repeat==='every'?'for every '+every+' such referrals':'when you reach '+every}. Only referrals made after you joined the programme count.`;
+const L=String(D.referral_link||'');
+if(/^https:\/\/[^\s<>"']+$/i.test(L)){$('share').hidden=false;$('lk').textContent=L;
+  $('wa').href='https://wa.me/?text='+encodeURIComponent('Open your Angel One demat account with my referral link: '+L);
+  $('cp').onclick=async()=>{try{await navigator.clipboard.writeText(L);$('cp').textContent='Copied'}catch(e){const r=document.createRange();r.selectNodeContents($('lk'));const s=getSelection();s.removeAllRanges();s.addRange(r);$('cp').textContent='Selected, copy it'}setTimeout(()=>$('cp').textContent='Copy link',1800)};}
 $('upd').textContent=D.updated?new Date(D.updated).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'';
 })();
 </script>
