@@ -1,0 +1,300 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style></head><body><title>Ragesh's Referral Card</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single referral card — greeting band, earnings tiles, milestone meter, referral list; one column on phone */
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --sunk:#e9eeec; --ink:#14211d; --muted:#5b6b66; --line:#d6dedb;
+  --accent:#c8780a; --band:#0f5f56; --band-ink:#f2faf8; --good:#1d7a4a; --good-bg:#e1f2e8; --warn:#9a5b00; --warn-bg:#fbefd9;
+  --f-display:"Familjen Grotesk",ui-sans-serif,system-ui,sans-serif; --f-body:"Public Sans",ui-sans-serif,system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1514;--surface:#161e1c;--sunk:#1d2725;--ink:#e6eeeb;--muted:#9aaca6;--line:#2a3633;--accent:#e9a23b;--band:#123e39;--band-ink:#e6f5f2;--good:#6fd39b;--good-bg:#173226;--warn:#f0b864;--warn-bg:#33270f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1514;--surface:#161e1c;--sunk:#1d2725;--ink:#e6eeeb;--muted:#9aaca6;--line:#2a3633;--accent:#e9a23b;--band:#123e39;--band-ink:#e6f5f2;--good:#6fd39b;--good-bg:#173226;--warn:#f0b864;--warn-bg:#33270f;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.band{background:var(--band);color:var(--band-ink)}
+.in{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band .in{padding-block:28px 26px;display:grid;gap:6px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+h1{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.15;margin:0;text-wrap:balance}
+.sub{opacity:.85;font-size:14px}
+.code{font-family:var(--f-mono);font-size:12.5px}
+main.in{padding-block:22px 48px;display:grid;gap:18px}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.tile .l{font-size:12px;color:var(--muted)}
+.tile .v{font-family:var(--f-display);font-weight:700;font-size:28px;font-variant-numeric:tabular-nums}
+.tile.money{border-color:var(--accent)}
+.tile.money .v{color:var(--accent)}
+.meter{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px}
+.meter h2,.list h2{font-family:var(--f-display);font-weight:600;font-size:17px;margin:0}
+.steps{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px}
+.steps i{height:10px;border-radius:5px;background:var(--sunk)}
+.steps i.on{background:var(--accent)}
+.muted{color:var(--muted);font-size:13.5px}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.list .hd{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.ri{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.ri:last-child{border-bottom:none}
+.ri .nm{font-weight:600}
+.ri .meta{font-size:12.5px;color:var(--muted)}
+.pill{font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px;white-space:nowrap;align-self:start}
+.pill.on{background:var(--good-bg);color:var(--good)} .pill.wait{background:var(--warn-bg);color:var(--warn)}
+.empty{padding:24px 16px;color:var(--muted);text-align:center}
+.terms{font-size:13px;color:var(--muted);display:grid;gap:4px}
+footer{font-size:12.5px;color:var(--muted)}
+@media (max-width:560px){.tiles{grid-template-columns:1fr 1fr}.tile.money{grid-column:span 2}h1{font-size:26px}}
+.guide{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.guide .hd{padding:14px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.guide h2{font-family:var(--f-display);font-weight:600;font-size:17px;margin:0}
+.gv{position:relative;aspect-ratio:16/9;background:#0b3d37;overflow:hidden;cursor:pointer;user-select:none}
+.gv .stg{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;color:#eef8f6;font-family:var(--f-body)}
+.gv .sc{position:absolute;inset:0;opacity:0}
+.gv .bg1{position:absolute;inset:0;background:radial-gradient(900px 520px at 85% 10%,#14695f 0,transparent 70%),radial-gradient(700px 500px at 0% 100%,#0f5249 0,transparent 70%),#0b3d37}
+.gv .k{position:absolute;left:96px;top:92px;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:#f3b75a;font-weight:600}
+.gv .h{position:absolute;left:96px;top:136px;width:640px;font-family:var(--f-display);font-weight:700;font-size:58px;line-height:1.08;letter-spacing:-.01em}
+.gv .p{position:absolute;left:96px;width:600px;font-size:26px;line-height:1.4;color:#c4e4df}
+.gv .big{font-family:var(--f-display);font-weight:700}
+.gv .phone{position:absolute;left:820px;top:70px;width:300px;height:590px;border-radius:44px;background:#f6f8f7;border:10px solid #06221f;box-shadow:0 30px 60px rgba(0,0,0,.35);overflow:hidden;color:#14211d}
+.gv .phone .bar{height:64px;background:#e3ebe8;display:flex;align-items:center;padding:0 22px;font-weight:700;font-size:20px;gap:10px}
+.gv .phone .av{width:34px;height:34px;border-radius:50%;background:#c8780a}
+.gv .phone .it{margin:14px 18px 0;height:54px;border-radius:12px;background:#e9eeec;display:flex;align-items:center;padding:0 16px;font-size:19px;color:#5b6b66}
+.gv .phone .it.hi{background:#fff;border:2px solid #c8780a;color:#14211d;font-weight:700}
+.gv .ripple{position:absolute;width:70px;height:70px;border-radius:50%;background:rgba(200,120,10,.35);left:0;top:0}
+.gv .link{position:absolute;left:96px;top:330px;width:620px;height:84px;border-radius:16px;background:#eef8f6;color:#14211d;display:flex;align-items:center;gap:14px;padding:0 24px;font-family:var(--f-mono);font-size:22px}
+.gv .link b{font-family:var(--f-body);margin-left:auto;background:#c8780a;color:#fff;border-radius:10px;padding:10px 16px;font-size:20px}
+.gv .chat{position:absolute;left:820px;top:110px;width:360px;height:500px;border-radius:24px;background:#e7f2ec;overflow:hidden;color:#14211d}
+.gv .chat .top{height:70px;background:#1f8f4e;color:#fff;display:flex;align-items:center;padding:0 22px;font-weight:700;font-size:21px}
+.gv .bub{position:absolute;right:20px;width:280px;border-radius:16px 4px 16px 16px;background:#d6f3df;padding:14px 16px;font-size:18px;line-height:1.35}
+.gv .people{position:absolute;left:760px;top:200px;display:grid;grid-template-columns:repeat(2,200px);gap:26px}
+.gv .pc{position:relative;height:190px;border-radius:20px;background:#eef8f6;color:#14211d;display:grid;place-items:center;align-content:center;gap:8px;font-weight:700;font-size:20px}
+.gv .pc i{width:58px;height:58px;border-radius:50%;background:#9cc9c1;display:block}
+.gv .tick{position:absolute;width:44px;height:44px;border-radius:50%;background:#1d7a4a;color:#fff;display:grid;place-items:center;font-size:26px;font-weight:700}
+.gv .coin{position:absolute;left:800px;top:170px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffd27a,#c8780a 70%);display:grid;place-items:center;box-shadow:0 30px 60px rgba(0,0,0,.3);color:#3a2300}
+.gv .coin span{font-family:var(--f-display);font-weight:700;font-size:96px}
+.gv .ms{position:absolute;left:96px;top:420px;display:flex;gap:16px}
+.gv .ms i{width:104px;height:26px;border-radius:13px;background:#1c5a52;display:block}
+.gv .ms i.on{background:#f3b75a}
+.gv .bonus{position:absolute;left:790px;top:200px;width:400px;white-space:nowrap;padding:34px;border-radius:24px;background:#f3b75a;color:#3a2300;text-align:center}
+.gv .bonus .big{font-size:80px;line-height:1.05;margin-top:8px}
+.gv .card{position:absolute;left:800px;top:90px;width:380px;height:540px;border-radius:24px;background:#f3f5f4;color:#14211d;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.gv .card .cb{background:#0f5f56;color:#f2faf8;padding:26px 24px;font-family:var(--f-display);font-weight:700;font-size:30px}
+.gv .card .tl{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px}
+.gv .card .tl div{background:#fff;border:1px solid #d6dedb;border-radius:12px;padding:12px 14px;font-size:15px;color:#5b6b66}
+.gv .card .tl b{display:block;font-family:var(--f-display);font-size:34px;color:#14211d}
+.gv .card .tl .m{grid-column:span 2;border-color:#c8780a}.gv .card .tl .m b{color:#c8780a}
+.gv .ctl{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.15)}
+.gv .ctl i{display:block;height:100%;width:0;background:#f3b75a}
+.gv .play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(6,34,31,.35);transition:opacity .2s}
+.gv .play span{width:76px;height:76px;border-radius:50%;background:#f3b75a;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.gv .play span::before{content:"";margin-left:6px;border-left:24px solid #3a2300;border-top:15px solid transparent;border-bottom:15px solid transparent}
+.gv .play.re span::before{margin:0;border:0;width:28px;height:28px;border-radius:50%;border:5px solid #3a2300;border-right-color:transparent}
+.gv.playing .play{opacity:0;pointer-events:none}
+.guide .gbtn{font:inherit;font-weight:600;font-size:13px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 11px;cursor:pointer}
+.guide .gbtn:focus-visible,.gv:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.guide .steps-txt{padding:12px 16px;font-size:13.5px;color:var(--muted);display:none}
+.guide.txt .steps-txt{display:block}
+.guide .steps-txt ol{margin:0;padding-left:20px;display:grid;gap:4px}
+.gv .card .rw{margin:0 18px 10px;background:#fff;border:1px solid #d6dedb;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:17px}
+.gv .card .rw em{font-style:normal;font-size:14px;padding:4px 10px;border-radius:99px;background:#fbefd9;color:#9a5b00}
+.gv .card .rw em.ok{background:#e1f2e8;color:#1d7a4a}
+.gv.nar{aspect-ratio:3/4}
+.gv.nar .stg{width:720px;height:960px}
+.gv.nar .k{left:56px;top:56px;font-size:24px}
+.gv.nar .h{left:56px;top:100px!important;width:608px;font-size:58px!important}
+.gv.nar .p{left:56px;width:608px;top:300px!important;font-size:32px}
+.gv.nar .sc[data-s="0"] .p{top:330px!important}
+.gv.nar .phone{left:210px;top:420px;height:520px}
+.gv.nar .link{left:56px;top:430px!important;width:608px}
+.gv.nar .chat{left:180px;top:540px;height:400px}
+.gv.nar .people{left:147px;top:460px}
+.gv.nar .coin{left:170px;top:470px}
+.gv.nar .sc[data-s="0"] .coin{left:210px!important;top:480px!important}
+.gv.nar .ms{left:56px;top:430px}
+.gv.nar .bonus{left:160px;top:520px}
+.gv.nar .card{left:170px;top:500px;height:440px}
+</style>
+
+<div class="band"><div class="in">
+  <div class="eyebrow">My Equity School · Referral Partner</div>
+  <h1 id="hello">Your referrals</h1>
+  <div class="sub">Partner since <span id="joined"></span> · <span class="code" id="pcode"></span></div>
+</div></div>
+
+<main class="in">
+  <section class="tiles" aria-label="Your numbers">
+    <div class="tile"><div class="l">Friends referred</div><div class="v" id="t-ref">0</div><div class="muted">accounts opened since you joined</div></div>
+    <div class="tile"><div class="l">Started trading</div><div class="v" id="t-trd">0</div><div class="muted" id="t-trd-s">of your referrals</div></div>
+    <div class="tile money"><div class="l">Partner bonus earned</div><div class="v" id="t-bonus">₹0</div><div class="muted">from My Equity School</div></div>
+  </section>
+
+  <section class="guide" id="guide" aria-labelledby="gh">
+    <div class="hd"><h2 id="gh">How it works · 40-second guide</h2><button class="gbtn" type="button" id="gtxt" aria-expanded="false">Read as text</button></div>
+    <div class="gv" id="gv" tabindex="0" role="button" aria-label="Play the 40-second guide on how to earn your partner bonus">
+      <div class="stg" id="gstg" aria-hidden="true">
+        <div class="bg1"></div>
+        <div class="sc" data-s="0" data-e="4.5">
+          <div class="k" data-in=".2">My Equity School · Referral Partner</div>
+          <div class="h" data-in=".5" style="top:150px;font-size:68px">Earn a bonus for every friend you bring</div>
+          <div class="p" data-in="1.2" style="top:400px">4 simple steps · 40 seconds</div>
+          <div class="coin" data-pop="1.4" style="width:300px;height:300px;left:860px;top:210px"><span style="font-size:110px">₹</span></div>
+        </div>
+        <div class="sc" data-s="4.5" data-e="11">
+          <div class="k" data-in=".2">Step 1</div>
+          <div class="h" data-in=".4">Open your Angel One app</div>
+          <div class="p" data-in="1" style="top:290px">Go to <b style="color:#fff">Refer &amp; Earn</b>. Your personal referral link is there.</div>
+          <div class="phone" data-in=".6">
+            <div class="bar"><span class="av"></span>My account</div>
+            <div class="it">Profile</div><div class="it">Funds</div><div class="it">Reports</div>
+            <div class="it hi" data-pop="2.2">Refer &amp; Earn</div><div class="it">Settings</div>
+            <div class="ripple" data-tap="3.2" style="left:118px;top:262px"></div>
+          </div>
+        </div>
+        <div class="sc" data-s="11" data-e="17">
+          <div class="k" data-in=".2">Step 2</div>
+          <div class="h" data-in=".4">Copy your link and share it</div>
+          <div class="p" data-in="1" style="top:300px">Send it to friends and family on WhatsApp.</div>
+          <div class="link" data-in="1.4" style="top:400px">angelone…/your-link<b id="gcopy">Copy</b></div>
+          <div class="chat" data-in="1.8"><div class="top">WhatsApp</div>
+            <div class="bub" data-in="3.2" style="top:110px">Open your Angel One account with my link angelone…/your-link</div>
+            <div class="bub" data-in="4.4" style="top:250px;right:auto;left:20px;border-radius:4px 16px 16px 16px;background:#fff">Done! Opening it now</div>
+          </div>
+        </div>
+        <div class="sc" data-s="17" data-e="23">
+          <div class="k" data-in=".2">Step 3</div>
+          <div class="h" data-in=".4">Your friend opens an account</div>
+          <div class="p" data-in="1" style="top:300px">They must sign up through <b style="color:#fff">your link</b> so it counts for you.</div>
+          <div class="people">
+            <div class="pc" data-in="1.4"><i></i>Friend 1<span class="tick" data-pop="2.6" style="right:8px;top:8px">✓</span></div>
+            <div class="pc" data-in="1.7"><i></i>Friend 2<span class="tick" data-pop="3.1" style="right:8px;top:8px">✓</span></div>
+          </div>
+        </div>
+        <div class="sc" data-s="23" data-e="30">
+          <div class="k" data-in=".2">Step 4</div>
+          <div class="h" data-in=".4" id="g4h">They make their first trade</div>
+          <div class="p" data-in="1" style="top:300px" id="g4p">That's when you earn your bonus from My Equity School.</div>
+          <div class="coin" data-pop="1.4"><span id="gcount">₹0</span></div>
+        </div>
+        <div class="sc" data-s="30" data-e="36.5">
+          <div class="k" data-in=".2">Milestone bonus</div>
+          <div class="h" data-in=".4" id="gmh">Reach 5 and earn extra</div>
+          <div class="p" data-in="1" style="top:300px" id="gmp">Every 5 trading referrals adds a big bonus.</div>
+          <div class="ms" id="gms"></div>
+          <div class="bonus" data-pop="4.6"><div style="font-size:22px;font-weight:600">Milestone bonus</div><div class="big" id="gmb">+₹1,000</div></div>
+        </div>
+        <div class="sc" data-s="36.5" data-e="42">
+          <div class="k" data-in=".2">Track it all</div>
+          <div class="h" data-in=".4">Right here on this page</div>
+          <div class="p" data-in="1" style="top:290px">Your referrals and bonus update every day. Angel One's own Refer &amp; Earn reward is separate.</div>
+          <div class="card" data-in=".8"><div class="cb">Namaste, Partner</div>
+            <div class="tl"><div>Friends referred<b>3</b></div><div>Started trading<b>2</b></div><div class="m">Partner bonus earned<b id="gcard">₹400</b></div></div>
+            <div class="rw" data-in="1.6"><span>Friend 1</span><em class="ok">Trading</em></div><div class="rw" data-in="1.9"><span>Friend 2</span><em class="ok">Trading</em></div><div class="rw" data-in="2.2"><span>Friend 3</span><em>Account opened</em></div></div>
+        </div>
+      </div>
+      <div class="ctl"><i id="gbar"></i></div>
+      <div class="play" id="gplay"><span></span></div>
+    </div>
+    <div class="steps-txt" id="gsteps"><ol>
+      <li>Open your Angel One app and go to Refer &amp; Earn.</li>
+      <li>Copy your referral link and share it on WhatsApp.</li>
+      <li>Your friend opens an Angel One account through your link.</li>
+      <li id="gt4">When they make their first trade, you earn your bonus.</li>
+      <li id="gt5">Reach the milestone to earn an extra bonus.</li>
+      <li>Track everything on this page. It updates every day.</li>
+    </ol></div>
+  </section>
+
+  <section class="meter" aria-labelledby="mh">
+    <h2 id="mh">Next milestone</h2>
+    <div class="steps" id="steps"></div>
+    <div class="muted" id="mtext"></div>
+  </section>
+
+  <section class="list" aria-labelledby="lh">
+    <div class="hd"><h2 id="lh">People you referred</h2><span class="muted" id="lcount"></span></div>
+    <div id="rows"></div>
+  </section>
+
+  <section class="terms" aria-label="How the bonus works">
+    <b style="color:var(--ink)">How your bonus works</b>
+    <span id="terms"></span>
+    <span>Angel One's own Refer &amp; Earn reward is separate and is paid by Angel One into your account.</span>
+  </section>
+
+  <footer>Updated <span id="upd"></span>. Numbers refresh once a day. Questions? Call your My Equity School relationship manager.</footer>
+</main>
+
+<script type="application/json" id="data">{"first_name": "Ragesh", "code_masked": "IIR••••00", "joined": "2026-11-14", "updated": "2026-11-14T13:40:00Z", "settings": {"per_referral": 200, "counts_when": "traded", "milestone_every": 5, "milestone_bonus": 1000, "milestone_repeat": "once"}, "qualified": 0, "bonus": 0.0, "referrals": []}</script>
+<script>
+(function(){
+const D=JSON.parse(document.getElementById('data').textContent);
+const $=id=>document.getElementById(id);
+const inr=n=>'₹'+Math.round(n||0).toLocaleString('en-IN');
+const fmtD=s=>{if(!s)return'';const d=new Date(s+'T00:00:00');return isNaN(d)?s:d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})};
+const S=D.settings,refs=D.referrals||[];
+$('hello').textContent='Namaste, '+(D.first_name||'Partner');
+$('joined').textContent=fmtD(D.joined);$('pcode').textContent=D.code_masked||'';
+const traded=refs.filter(r=>r.traded).length;
+$('t-ref').textContent=refs.length;$('t-trd').textContent=traded;$('t-trd-s').textContent=refs.length?Math.round(traded/refs.length*100)+'% of your referrals':'of your referrals';
+$('t-bonus').textContent=inr(D.bonus);
+const every=Math.max(1,+S.milestone_every||5),q=D.qualified||0;
+const done=S.milestone_repeat==='every'?q%every:Math.min(q,every);
+$('steps').innerHTML=Array.from({length:every},(_,i)=>`<i class="${i<done?'on':''}"></i>`).join('');
+if(S.milestone_repeat!=='every'&&q>=every)$('mtext').textContent=`Milestone reached: ${inr(S.milestone_bonus)} bonus earned. You still earn ${inr(S.per_referral)} for every new referral.`;
+else $('mtext').textContent=`${every-done} more ${S.counts_when==='traded'?'referrals who start trading':'referrals'} to earn your ${inr(S.milestone_bonus)} bonus.`;
+$('lcount').textContent=refs.length?refs.length+' since you joined':'';
+const counts=r=>S.counts_when==='traded'?r.traded:true;
+$('rows').innerHTML=refs.length?refs.map(r=>`<div class="ri"><div><div class="nm"></div><div class="meta">Referred ${fmtD(r.date)} · <span class="code"></span></div></div><span class="pill ${r.traded?'on':'wait'}">${r.traded?'Trading':'Account opened'}</span>${counts(r)?`<div class="meta" style="grid-column:1/-1">Counts for your bonus: ${inr(S.per_referral)}</div>`:'<div class="meta" style="grid-column:1/-1">Counts for your bonus after the first trade</div>'}</div>`).join(''):'<div class="empty">No referrals since you joined yet. Share your Angel One referral link and they will show up here the day after the account opens.</div>';
+[...$('rows').querySelectorAll('.ri')].forEach((el,i)=>{el.querySelector('.nm').textContent=refs[i].first_name||'Friend';el.querySelector('.code').textContent=refs[i].code_masked||''});
+$('terms').textContent=`You earn ${inr(S.per_referral)} for every friend ${S.counts_when==='traded'?'who opens an account through your link and makes a first trade':'whose account opens through your link'}, plus ${inr(S.milestone_bonus)} ${S.milestone_repeat==='every'?'for every '+every+' such referrals':'when you reach '+every}. Only referrals made after you joined the programme count.`;
+$('upd').textContent=D.updated?new Date(D.updated).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'';
+})();
+</script>
+<script>
+(function(){
+const G=document.getElementById('gv');if(!G)return;
+let D={};try{D=JSON.parse(document.getElementById('data').textContent)}catch(e){}
+const S=Object.assign({per_referral:200,counts_when:'traded',milestone_every:5,milestone_bonus:1000,milestone_repeat:'once'},D.settings||{});
+const inr=n=>'₹'+Math.round(n||0).toLocaleString('en-IN');
+const $=id=>document.getElementById(id);
+const per=+S.per_referral||0,every=Math.max(1,Math.min(8,+S.milestone_every||5)),mb=+S.milestone_bonus||0,traded=S.counts_when==='traded';
+$('g4h').textContent=traded?'They make their first trade':'Their account opens';
+$('g4p').textContent=`That's when you earn ${inr(per)} from My Equity School.`;
+$('gmh').textContent=`Reach ${every} and earn extra`;
+$('gmp').textContent=S.milestone_repeat==='every'?`Every ${every} ${traded?'trading ':''}referrals adds ${inr(mb)}.`:`At ${every} ${traded?'trading ':''}referrals you get a one-time ${inr(mb)}.`;
+$('gmb').textContent='+'+inr(mb);$('gcard').textContent=inr(2*per);
+$('gt4').textContent=`${traded?'When they make their first trade':'When their account opens'}, you earn ${inr(per)}.`;
+$('gt5').textContent=`At ${every} ${traded?'trading ':''}referrals you get ${S.milestone_repeat==='every'?'another':'a one-time'} ${inr(mb)} bonus.`;
+$('gms').innerHTML=Array.from({length:every},()=>'<i></i>').join('');
+const msI=[...$('gms').children];
+const stg=$('gstg'),scs=[...stg.querySelectorAll('.sc')].map(el=>({el,s:+el.dataset.s,e:+el.dataset.e,ins:[...el.querySelectorAll('[data-in]')],pops:[...el.querySelectorAll('[data-pop]')],taps:[...el.querySelectorAll('[data-tap]')]}));
+const T=42,cl=x=>Math.max(0,Math.min(1,x)),ease=x=>1-Math.pow(1-cl(x),3);
+function render(t){
+  for(const c of scs){
+    const r=t-c.s,on=t>=c.s&&t<c.e,last=c===scs[scs.length-1];
+    const a=on?Math.min(ease(r/.45),last?1:ease((c.e-t)/.45)):0;
+    c.el.style.opacity=a;c.el.style.visibility=a>0?'visible':'hidden';if(!a)continue;
+    for(const el of c.ins){const k=ease((r-+el.dataset.in)/.55);el.style.opacity=k;el.style.transform=`translateY(${(1-k)*22}px)`}
+    for(const el of c.pops){const x=cl((r-+el.dataset.pop)/.45);const s=x<=0?0:x<.7?ease(x/.7)*1.08:1.08-.08*ease((x-.7)/.3);el.style.opacity=x>0?1:0;el.style.transform=`scale(${s})`}
+    for(const el of c.taps){const x=(r-+el.dataset.tap)/.7;el.style.opacity=x>0&&x<1?1-x:0;el.style.transform=`scale(${.3+x*1.6})`}
+  }
+  const s4=scs[4],r4=t-s4.s;$('gcount').textContent=inr(per*ease((r4-2.2)/1.6));
+  const s5=scs[5],r5=t-s5.s;msI.forEach((el,i)=>el.classList.toggle('on',r5>=1.2+i*(2.8/every)));
+  const s2=scs[2],r2=t-s2.s;$('gcopy').textContent=r2>=2.5?'Copied ✓':'Copy';
+  $('gbar').style.width=(cl(t/T)*100)+'%';
+}
+window.__guideRender=render;
+let t0=null,t=0,raf=0,playing=false;
+function fit(){const w=G.clientWidth;const n=w<560;G.classList.toggle('nar',n);stg.style.transform=`scale(${w/(n?720:1280)})`}
+fit();if(window.ResizeObserver)new ResizeObserver(fit).observe(G);else addEventListener('resize',fit);
+render(1.6);
+function tick(now){if(t0===null)t0=now-t*1000;t=(now-t0)/1000;if(t>=T){t=T;render(T);stop(true);return}render(t);raf=requestAnimationFrame(tick)}
+function play(){if(t>=T)t=0;playing=true;t0=null;G.classList.add('playing');$('gplay').classList.remove('re');raf=requestAnimationFrame(tick)}
+function stop(end){playing=false;cancelAnimationFrame(raf);G.classList.remove('playing');if(end)$('gplay').classList.add('re')}
+G.addEventListener('click',()=>playing?stop(false):play());
+G.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();playing?stop(false):play()}});
+$('gtxt').addEventListener('click',()=>{const o=$('guide').classList.toggle('txt');$('gtxt').setAttribute('aria-expanded',o);$('gtxt').textContent=o?'Hide text':'Read as text'});
+})();
+</script>
+</body></html>
